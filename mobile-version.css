@@ -1,0 +1,13 @@
+/* Media query for screens less than 450px wide */
+@media (max-width: 450px) {
+    .header{
+        margin-top: 30px;
+    }
+    #site-title {
+        font-size: 70px;
+    }
+    #site-sub-title{
+        font-size: 20px;
+        padding: 0;
+    }
+}
