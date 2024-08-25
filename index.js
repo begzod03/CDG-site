@@ -142,7 +142,7 @@ let velocity = 0;
 let animationFrameId;
 
 // Define automatic scroll speed and direction
-const autoScrollSpeed = 10; // Speed of auto-scrolling
+const autoScrollSpeed = 3; // Speed of auto-scrolling
 const scrollAmount = 0.3; // Increased amount for faster auto-scrolling
 
 // Add 'mouse-clicked' class when the mouse button is pressed down
@@ -254,33 +254,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const middleSection = document.getElementById('middle-section');
     const words = middleSectionText.querySelector('p').textContent.trim().split(' ');
     const originalHeight = middleSectionText.querySelector('p').offsetHeight;
-    
+    const animatedLine = document.getElementById("animated-line")
     middleSectionText.querySelector('p').style.height = `${originalHeight}px`;
     middleSectionText.querySelector('p').textContent = '';
   
     function revealWords() {
-      if (aboutSection.classList.contains('active')) {
-        let delay = 0;
-        words.forEach((word, index) => {
-          setTimeout(() => {
-            const span = document.createElement('span');
-            span.textContent = word + ' ';
-            span.style.opacity = 0; // Start hidden
-            span.style.transform = 'translateX(-20px)'; // Start from left
-            middleSectionText.querySelector('p').appendChild(span); // Only append once
-  
-            // Smooth transition
+        if (aboutSection.classList.contains('active')) {
+          let delay = 0;
+          words.forEach((word, index) => {
             setTimeout(() => {
-              span.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-              span.style.opacity = 1; // Fade in
-              span.style.transform = 'translateX(0)'; // Move to original position
-            }, 10);
-          }, delay);
-          delay += 5000 / words.length;
-        });
-        window.removeEventListener('scroll', revealWords); // Remove listener after triggering
+              const span = document.createElement('span');
+              span.textContent = word + ' ';
+              span.style.opacity = 0; // Start hidden
+              span.style.transform = 'translateX(-20px)'; // Start from left
+              middleSectionText.querySelector('p').appendChild(span); // Only append once
+      
+              // Smooth transition
+              setTimeout(() => {
+                span.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                span.style.opacity = 1; // Fade in
+                span.style.transform = 'translateX(0)'; // Move to original position
+              }, 10);
+            }, delay);
+            delay += 5000 / words.length;
+          });
+          animatedLine.classList.add('animate'); // Add class to trigger animation
+          window.removeEventListener('scroll', revealWords); // Remove listener after triggering
+        }
       }
-    }
+      
   
     // Trigger the revealWords function when the middle section becomes active
     const observer = new MutationObserver((mutations) => {
@@ -288,6 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
             if (aboutSection.classList.contains('active')) {
               revealWords();
+              aboutSection.classList.add('active');
               observer.disconnect(); // Disconnect the observer once triggered
             }
           }

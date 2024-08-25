@@ -37,14 +37,20 @@ body.hammer-down {
 
 /* Menu Button */
 .menu-button {
+    font-size: 45px;
     position: fixed;
     top: 20px;
     right: 20px;
     padding: 10px 15px;
-    background-color: #333;
-    color: #fff;
+    color: gold;
+    text-decoration: underline black;
     cursor: pointer;
+    transition: 0.5s ease;
     z-index: 1000;
+}
+.menu-button:hover {
+    color: black;
+    text-decoration: underline #ffd700;
 }
 
 .menu-overlay {
@@ -251,6 +257,7 @@ body.menu-open .menu-content {
 #intro-content-text {
     padding-right: 30px;
     width: 50%;
+    z-index: 1;
 }
 
 .intro-content-text-wrapper {
@@ -326,10 +333,37 @@ body.menu-open .menu-content {
 #middle-section-title {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     width: 50%;
     font-size: 80px;
 }
+
+.middle-section-line {
+    position: absolute;
+    width: 100%;
+    background-color: transparent;
+}
+
+.middle-section-line svg {
+    width: 100%;
+    background-color: transparent;
+}
+
+#animated-line {
+    stroke-dasharray: 5000;
+    stroke-dashoffset: 5000;
+  }
+  
+  #animated-line.animate {
+    animation: drawLine 12s ease forwards;
+  }
+  
+  @keyframes drawLine {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
 
 /* Portfolio */
 .portfolio {
@@ -346,15 +380,19 @@ body.menu-open .menu-content {
     display: flex;
     justify-content: center;
     margin: 30px;
-    font-size: 70px;
-    color: black;
+    font-size: 140px;
+    color: rgb(255, 255, 255);
+}
+.portfolio-title p{
+    z-index: 2;
 }
 
 #image-track {
+    position: absolute;
     display: flex;
     gap: 4vmin;
     left: 50%;
-    top: -50%;
+    top: 50%;
     transform: translate(0%, -70%);
     user-select: none; /* Prevent image highlighting */
 }
