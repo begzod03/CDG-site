@@ -250,7 +250,7 @@ document.querySelectorAll('.image-track-image image').forEach(image => {
 
 document.addEventListener('DOMContentLoaded', function() {
     const middleSectionText = document.getElementById('middle-section-text');
-    const aboutSection = document.getElementById('about-section');
+    const aboutSection = document.getElementById('section-2');
     const middleSection = document.getElementById('middle-section');
     const words = middleSectionText.querySelector('p').textContent.trim().split(' ');
     const originalHeight = middleSectionText.querySelector('p').offsetHeight;
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
               span.style.transform = 'translateX(0)'; // Move to original position
             }, 10);
           }, delay);
-          delay += 8000 / words.length;
+          delay += 5000 / words.length;
         });
         window.removeEventListener('scroll', revealWords); // Remove listener after triggering
       }
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentSectionIndex = 0;
     let isScrolling = false;
     let scrollTimeout = null;
-    const scrollDelay = 300; // Adjust this value to control the scroll delay
+    const scrollDelay = 0; // Adjust this value to control the scroll delay
 
     function switchSection(direction) {
         if (isScrolling) return;
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setTimeout(() => {
             isScrolling = false;
-        }, 700); // Adjust the delay to match the transition duration in CSS
+        }, 1500); // Adjust the delay to match the transition duration in CSS
     }
 
     window.addEventListener('wheel', function(event) {
