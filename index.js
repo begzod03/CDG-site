@@ -199,7 +199,7 @@ function animateMomentum() {
     if (Math.abs(velocity) < 0.1) return; // Stop if velocity is low
 
     currentTranslateX += velocity;
-    velocity *= 0.95; // Apply friction to slow down
+    velocity *= 0.15; // Apply friction to slow down
 
     // Limit the movement to not go beyond the center
     const maxTranslateX = 0;
@@ -246,59 +246,98 @@ document.querySelectorAll('.image-track-image image').forEach(image => {
 
 
 
-
-
-
+// Middle section text p animation and logic for appearance
 
 document.addEventListener('DOMContentLoaded', function() {
     const middleSectionText = document.getElementById('middle-section-text');
-    const middleSectionTitle = document.getElementById('middle-section-title');
-    const header = document.querySelector('.header');
+    const aboutSection = document.getElementById('about-section');
+    const middleSection = document.getElementById('middle-section');
     const words = middleSectionText.querySelector('p').textContent.trim().split(' ');
-
     const originalHeight = middleSectionText.querySelector('p').offsetHeight;
+    
     middleSectionText.querySelector('p').style.height = `${originalHeight}px`;
     middleSectionText.querySelector('p').textContent = '';
-
+  
     function revealWords() {
-        const headerBottom = header.getBoundingClientRect().bottom;
-        const viewportHeight = window.innerHeight;
-        const scrollY = window.scrollY;
+      if (aboutSection.classList.contains('active')) {
+        let delay = 0;
+        words.forEach((word, index) => {
+          setTimeout(() => {
+            const span = document.createElement('span');
+            span.textContent = word + ' ';
+            span.style.opacity = 0; // Start hidden
+            span.style.transform = 'translateX(-20px)'; // Start from left
+            middleSectionText.querySelector('p').appendChild(span); // Only append once
+  
+            // Smooth transition
+            setTimeout(() => {
+              span.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+              span.style.opacity = 1; // Fade in
+              span.style.transform = 'translateX(0)'; // Move to original position
+            }, 10);
+          }, delay);
+          delay += 8000 / words.length;
+        });
+        window.removeEventListener('scroll', revealWords); // Remove listener after triggering
+      }
+    }
+  
+    // Trigger the revealWords function when the middle section becomes active
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            if (aboutSection.classList.contains('active')) {
+              revealWords();
+              observer.disconnect(); // Disconnect the observer once triggered
+            }
+          }
+        });
+      });
+      
+      observer.observe(aboutSection, { attributes: true });
+  });
 
-        // Calculate the header's bottom position relative to the entire document
-        const headerBottomRelativeToDocument = headerBottom + scrollY;
 
-        // Calculate the bottom of the viewport relative to the entire document
-        const viewportBottomRelativeToDocument = scrollY + viewportHeight;
+// Custom Scrolling effect logic
 
-        // Check if the bottom of the viewport has reached the bottom of the header
-        if (viewportBottomRelativeToDocument >= headerBottomRelativeToDocument) {
-            let delay = 0;
-            words.forEach((word, index) => {
-                setTimeout(() => {
-                    const span = document.createElement('span');
-                    span.textContent = word + ' ';
-                    span.style.opacity = 0; // Start hidden
-                    span.style.transform = 'translateX(-20px)'; // Start from left
-                    middleSectionText.querySelector('p').appendChild(span); // Only append once
-                    
-                    // Smooth transition
-                    setTimeout(() => {
-                        span.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                        span.style.opacity = 1; // Fade in
-                        span.style.transform = 'translateX(0)'; // Move to original position
-                    }, 10);
-                }, delay);
-                delay += 8000 / words.length;
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    const sections = document.querySelectorAll('.section');
+    let currentSectionIndex = 0;
+    let isScrolling = false;
+    let scrollTimeout = null;
+    const scrollDelay = 300; // Adjust this value to control the scroll delay
 
-            window.removeEventListener('scroll', revealWords); // Remove listener after triggering
+    function switchSection(direction) {
+        if (isScrolling) return;
+
+        isScrolling = true;
+
+        sections[currentSectionIndex].classList.remove('active');
+
+        if (direction === 'down') {
+            currentSectionIndex = (currentSectionIndex + 1) % sections.length;
+        } else if (direction === 'up') {
+            currentSectionIndex = (currentSectionIndex - 1 + sections.length) % sections.length;
         }
+
+        sections[currentSectionIndex].classList.add('active');
+
+        setTimeout(() => {
+            isScrolling = false;
+        }, 700); // Adjust the delay to match the transition duration in CSS
     }
 
-    // Trigger the revealWords function on initial load in case the condition is met
-    revealWords();
+    window.addEventListener('wheel', function(event) {
+        if (scrollTimeout !== null) {
+            clearTimeout(scrollTimeout);
+        }
 
-    // Add the scroll event listener
-    window.addEventListener('scroll', revealWords);
+        scrollTimeout = setTimeout(function() {
+            if (event.deltaY > 0) {
+                switchSection('down');
+            } else if (event.deltaY < 0) {
+                switchSection('up');
+            }
+        }, scrollDelay);
+    });
 });
