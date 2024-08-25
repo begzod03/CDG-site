@@ -381,10 +381,11 @@ body.menu-open .menu-content {
     justify-content: center;
     margin: 30px;
     font-size: 140px;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
 }
 .portfolio-title p{
     z-index: 2;
+    text-decoration: underline gold;
 }
 
 #image-track {

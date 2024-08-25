@@ -312,19 +312,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function switchSection(direction) {
         if (isScrolling) return;
-
+    
         isScrolling = true;
-
+    
         sections[currentSectionIndex].classList.remove('active');
-
+    
         if (direction === 'down') {
-            currentSectionIndex = (currentSectionIndex + 1) % sections.length;
+            // Prevent scrolling down after the last section
+            if (currentSectionIndex < sections.length - 1) {
+                currentSectionIndex++;
+            }
         } else if (direction === 'up') {
-            currentSectionIndex = (currentSectionIndex - 1 + sections.length) % sections.length;
+            currentSectionIndex = Math.max(0, currentSectionIndex - 1);
         }
-
+    
         sections[currentSectionIndex].classList.add('active');
-
+    
         setTimeout(() => {
             isScrolling = false;
         }, 1500); // Adjust the delay to match the transition duration in CSS
