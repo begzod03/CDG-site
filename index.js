@@ -131,118 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// Portfolio
-const portfolio = document.querySelector('.portfolio');
-const imageTrack = document.getElementById('image-track');
-
-let isDragging = false;
-let startX = 0;
-let currentTranslateX = 0;
-let velocity = 0;
-let animationFrameId;
-
-// Define automatic scroll speed and direction
-const autoScrollSpeed = 3; // Speed of auto-scrolling
-const scrollAmount = 0.3; // Increased amount for faster auto-scrolling
-
-// Add 'mouse-clicked' class when the mouse button is pressed down
-portfolio.addEventListener('mousedown', function(e) {
-    isDragging = true;
-    startX = e.clientX;
-    velocity = 0; // Reset velocity
-    portfolio.classList.add('mouse-clicked');
-    cancelAnimationFrame(animationFrameId); // Stop momentum on drag
-});
-
-// Remove 'mouse-clicked' class when the mouse button is released
-portfolio.addEventListener('mouseup', function() {
-    isDragging = false;
-    portfolio.classList.remove('mouse-clicked');
-    animateMomentum(); // Start momentum animation
-});
-
-// Also remove 'mouse-clicked' class if the mouse leaves the element while holding down
-portfolio.addEventListener('mouseleave', function() {
-    isDragging = false;
-    portfolio.classList.remove('mouse-clicked');
-    animateMomentum(); // Start momentum animation
-});
-
-// Update image track position on mouse move
-portfolio.addEventListener('mousemove', function(e) {
-    if (!isDragging) return;
-
-    const deltaX = e.clientX - startX;
-    currentTranslateX += deltaX;
-    startX = e.clientX;
-
-    // Calculate velocity
-    velocity = deltaX;
-
-    // Limit the movement to not go beyond the center
-    const maxTranslateX = 0; // Adjust this value based on your needs
-
-    // Define additional drag distance
-    const additionalDrag = 1900; // Adjust this value as needed
-    const minTranslateX = -((imageTrack.scrollWidth - portfolio.clientWidth) / 2) - additionalDrag;
-
-    // Update the translation logic
-    currentTranslateX = Math.max(Math.min(currentTranslateX, maxTranslateX), minTranslateX);
-
-    // Apply transition CSS for smooth scrolling
-    imageTrack.style.transition = 'transform 0.1s ease-in-out'; // Reduced transition time
-    imageTrack.style.transform = `translate(${currentTranslateX}px, -50%)`;
-});
-
-// Function to animate momentum after mouse release
-function animateMomentum() {
-    if (Math.abs(velocity) < 0.1) return; // Stop if velocity is low
-
-    currentTranslateX += velocity;
-    velocity *= 0.15; // Apply friction to slow down
-
-    // Limit the movement to not go beyond the center
-    const maxTranslateX = 0;
-    const additionalDrag = 1900;
-    const minTranslateX = -((imageTrack.scrollWidth - portfolio.clientWidth) / 2) - additionalDrag;
-    currentTranslateX = Math.max(Math.min(currentTranslateX, maxTranslateX), minTranslateX);
-
-    // Apply transition CSS for smooth scrolling
-    imageTrack.style.transition = 'transform 0.1s ease-in-out'; // Reduced transition time
-    imageTrack.style.transform = `translate(${currentTranslateX}px, -50%)`;
-
-    animationFrameId = requestAnimationFrame(animateMomentum);
-}
-
-// Start automatic scrolling function
-function startAutoScroll() {
-    setInterval(() => {
-        currentTranslateX -= scrollAmount; // scroll left continuously
-
-        const maxTranslateX = 0;
-        const additionalDrag = 1900;
-        const minTranslateX = -((imageTrack.scrollWidth - portfolio.clientWidth) / 2) - additionalDrag;
-
-        // Loop back to the first element
-        if (currentTranslateX < minTranslateX) {
-            currentTranslateX = maxTranslateX; // reset to show the first element again
-        }
-
-        // Apply transition CSS for smooth scrolling
-        imageTrack.style.transition = 'transform 0.1s ease-in-out'; // Reduced transition time
-        imageTrack.style.transform = `translate(${currentTranslateX}px, -50%)`;
-    }, autoScrollSpeed);
-}
-
-// Start automatic scrolling function when the page loads
-startAutoScroll();
-
-document.querySelectorAll('.image-track-image image').forEach(image => {
-    image.addEventListener('click', function() {
-        this.classList.toggle('expanded');
-    });
-});
-
+// Portfolio section image carousel
 
 
 
@@ -251,7 +140,6 @@ document.querySelectorAll('.image-track-image image').forEach(image => {
 document.addEventListener('DOMContentLoaded', function() {
     const middleSectionText = document.getElementById('middle-section-text');
     const aboutSection = document.getElementById('section-2');
-    const middleSection = document.getElementById('middle-section');
     const words = middleSectionText.querySelector('p').textContent.trim().split(' ');
     const originalHeight = middleSectionText.querySelector('p').offsetHeight;
     const animatedLine = document.getElementById("animated-line")
@@ -347,3 +235,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }, scrollDelay);
     });
 });
+
+// Trigger construction-hat animation
+document.getElementById('section-3').addEventListener('transitionend', function() {
+    if (this.classList.contains('active')) {
+        triggerHatAnimation();
+    }
+});
+
+function triggerHatAnimation() {
+    const animatedHat = document.getElementById('animated-hat');
+    animatedHat.classList.add('animate'); // Add class to trigger animation
+}

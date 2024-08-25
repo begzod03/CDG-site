@@ -33,8 +33,6 @@ body.hammer-down {
     z-index: 2;
 }
 
-
-
 /* Menu Button */
 .menu-button {
     font-size: 45px;
@@ -367,42 +365,86 @@ body.menu-open .menu-content {
 
 /* Portfolio */
 .portfolio {
+    position: relative;
     margin-top: 50px;
+    overflow: auto; /* Adjusted overflow */
     height: 100vh;
-    cursor: grab;
+    cursor: default;
+    overflow: hidden; /* Ensure the overflow is hidden */
 }
 
-.portfolio.mouse-clicked {
-    cursor: grabbing;
+.construction-hat {
+    position: absolute;
+    top: 0;
+    left: 5%;
+    background-color: transparent;
 }
+
+.construction-hat svg {
+    width: 100%;
+    background-color: transparent;
+}
+
+#animated-hat {
+    stroke-dasharray: 5000;
+    stroke-dashoffset: 5000;
+  }
+  
+  #animated-hat.animate {
+    animation: drawHat 12s ease forwards;
+  }
+  
+  @keyframes drawHat {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
 
 .portfolio-title {
     display: flex;
     justify-content: center;
-    margin: 30px;
     font-size: 140px;
     color: rgb(0, 0, 0);
 }
-.portfolio-title p{
+
+.portfolio-title p {
+    margin-bottom: 5vh;
     z-index: 2;
     text-decoration: underline gold;
 }
 
+
 #image-track {
-    position: absolute;
-    display: flex;
-    gap: 4vmin;
-    left: 50%;
-    top: 50%;
-    transform: translate(0%, -70%);
-    user-select: none; /* Prevent image highlighting */
+    overflow: hidden;
+    padding: 60px 0;
+    background: white;
+    white-space: nowrap;
+    position: relative;
 }
 
-#image-track > .image-track-image {
+.image-track-wrapper {
+    display: inline-block;
+    animation: 40s slide infinite linear;
+    animation-play-state: running;
+}
+
+#image-track:hover .image-track-wrapper {
+    animation-play-state: paused;
+}
+
+.image-track-wrapper > .image {
     width: 40vmin;
-    height: 56vmin;
+    height: 55vmin;
+    margin: 0 40px;
     object-fit: cover;
-    object-position: center;
-    transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease;
     cursor: pointer;
+}
+
+@keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
 }
