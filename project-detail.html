@@ -4,17 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Details</title>
-    <link rel="stylesheet" href="project-details.css">
+    <link rel="stylesheet" href="project-detail.css">
 </head>
 <body>
+    <div class="white-overlay"></div>
+
     <div class="container">
         <button class="go-back-button"> <a href="index.html">X</a></button>
         <div class="project-details-container">
-            <img class="project-image" src="" alt="Project Image">
+
+            <div class="image-container-wrapper">
+
+                <div class="arrow-container">
+                    <button class="arrow left-arrow">&#9664;</button>
+                    <button class="arrow right-arrow">&#9654;</button>
+                </div>
+
+                <div class="image-container">
+                    <img class="project-image" src="" alt="Project Image">
+                </div>
+
+            </div>
+
+
             <div class="project-info">
-                <h1 class="project-name">Project Name</h1>
-                <p class="project-year-built">Year Built: </p>
-                <p class="project-details">Project Details</p>
+                <div class="project-text">
+                    <h1 class="project-name">Project Name</h1>
+                    <p class="project-year-built">Year Built: </p>
+                    <p class="project-details">Project Details</p>
+                </div>
             </div>
         </div>
     </div>

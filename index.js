@@ -3,12 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const capitalAnimation = document.querySelector('#capital-animation');
     const introTitleAnimation = document.querySelector(".intro-content-title");
     const siteSubTitle = document.querySelector('#site-sub-title');
-    const animatedPath = document.querySelector('.animated-path');
-    const introContentImage = document.querySelector('#intro-content-image');
-
     const introTitles = document.querySelectorAll(".intro-content-title");
     const toReality = document.querySelector('#to-reality');
-    
+
     // Animate the intro content titles
     setTimeout(() => {
         introTitles.forEach(title => {
@@ -19,12 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Slide in the <h1> element
     siteTitle.style.transform = 'translateX(3%)';
 
-    // Trigger the SVG line animation
-    animatedPath.style.animation = 'draw 8s ease forwards';
-
     // Animate the intro content title immediately
     introTitleAnimation.classList.add("fill");
-
 
     // Wait for the slide-in animation to complete before starting the CAPITAL fill effect
     setTimeout(() => {
@@ -37,20 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Move "TO REALITY" to the right after a short delay
             setTimeout(() => {
                 toReality.style.transform = 'translateX(27%)';
-                toReality.style.color = "white"
+                toReality.style.color = "white";
             }, 500);
         }, 500);
     }, 2000);
-
-    // Add event listener for click to change cursor
-    document.body.addEventListener('click', function() {
-        document.body.classList.add('hammer-down');
-
-        // Revert back to the original cursor after 0.2 seconds
-        setTimeout(() => {
-            document.body.classList.remove('hammer-down');
-        }, 200);
-    });
 });
 
 
@@ -89,41 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
-// Image Animation and handling
-
-document.addEventListener('DOMContentLoaded', function() {
-    const introContentImage = document.querySelector('#intro-content-image img');
-    const imageSources = ['assets/house2.jpg', 'assets/house3.jpg', 'assets/house4.jpg'];
-    let currentIndex = 0;
-
-    introContentImage.addEventListener('click', function() {
-        // Apply the hide animation
-        introContentImage.classList.add('hide');
-
-        // After the hide animation, change the image source and apply the show animation
-        setTimeout(() => {
-            // Update the image index
-            currentIndex = (currentIndex + 1) % imageSources.length;
-
-            // Change the image source
-            introContentImage.src = imageSources[currentIndex];
-
-            // Remove the hide class
-            introContentImage.classList.remove('hide');
-
-            // Apply the show animation
-            introContentImage.classList.add('show');
-
-            // Reset for the next click
-            setTimeout(() => {
-                introContentImage.classList.remove('show');
-            }, 500); // Match this timeout with the CSS animation duration
-        }, 500); // Match this timeout with the CSS animation duration
-    });
-});
-
-
 
 // Middle section text p animation and logic for appearance
 
@@ -202,57 +150,76 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial update
     updateIndicators();
 
+// Update navigation indicator sign based on which section is active
+document.addEventListener('DOMContentLoaded', function() {
+    const indicators = document.querySelectorAll('.indicator');
+    const sections = document.querySelectorAll('.section');
+
+    let currentSectionIndex = 0;
+
+    // Function to update the indicators
+    function updateIndicators() {
+        indicators.forEach((indicator, index) => {
+            if (index === currentSectionIndex) {
+                indicator.classList.add('filled');
+            } else {
+                indicator.classList.remove('filled');
+            }
+        });
+    }
+});
 
 
-    
-// Custom Scrolling effect logic
+    // Initial update
+    updateIndicators();
 
-    let isScrolling = false;
-    let scrollTimeout = null;
-    const scrollDelay = 0; // Adjust this value to control the scroll delay
+ // Custom Scrolling effect logic
+let isScrolling = false;
+let scrollTimeout = null;
+const scrollDelay = 0; // Adjust this value to control the scroll delay
 
-    // Find the initial active section
-    const initialActiveSection = document.querySelector('.active');
-    if (initialActiveSection) {
-        currentSectionIndex = Array.prototype.indexOf.call(sections, initialActiveSection);
+// Find the initial active section
+const initialActiveSection = document.querySelector('.active');
+if (initialActiveSection) {
+    currentSectionIndex = Array.prototype.indexOf.call(sections, initialActiveSection);
+}
+
+function switchSection(direction) {
+    if (isScrolling) return;
+    isScrolling = true;
+
+    // Remove active class from the current section
+    sections[currentSectionIndex].classList.remove('active');
+
+    if (direction === 'down') {
+        // Prevent scrolling down after the last section
+        if (currentSectionIndex < sections.length - 1) {
+            currentSectionIndex++;
+        }
+    } else if (direction === 'up') {
+        currentSectionIndex = Math.max(0, currentSectionIndex - 1);
     }
 
-    function switchSection(direction) {
-        if (isScrolling) return;
-        isScrolling = true;
+    // Add active class to the new section
+    sections[currentSectionIndex].classList.add('active');
+    updateIndicators(); // Update indicators here
+    setTimeout(() => {
+        isScrolling = false;
+    }, 1500); // Adjust the delay to match the transition duration in CSS
+}
 
-        // Remove active class from the current section
-        sections[currentSectionIndex].classList.remove('active');
-
-        if (direction === 'down') {
-            // Prevent scrolling down after the last section
-            if (currentSectionIndex < sections.length - 1) {
-                currentSectionIndex++;
-            }
-        } else if (direction === 'up') {
-            currentSectionIndex = Math.max(0, currentSectionIndex - 1);
-        }
-
-        // Add active class to the new section
-        sections[currentSectionIndex].classList.add('active');
-        updateIndicators(); // Update indicators here
-        setTimeout(() => {
-            isScrolling = false;
-        }, 1500); // Adjust the delay to match the transition duration in CSS
+window.addEventListener('wheel', function(event) {
+    if (scrollTimeout !== null) {
+        clearTimeout(scrollTimeout);
     }
-
-    window.addEventListener('wheel', function(event) {
-        if (scrollTimeout !== null) {
-            clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function() {
+        if (event.deltaY > 0) {
+            switchSection('down');
+        } else if (event.deltaY < 0) {
+            switchSection('up');
         }
-        scrollTimeout = setTimeout(function() {
-            if (event.deltaY > 0) {
-                switchSection('down');
-            } else if (event.deltaY < 0) {
-                switchSection('up');
-            }
-        }, scrollDelay);
-    });
+    }, scrollDelay);
+});
 
     // Logic to handle coming back from project-detail.html
     const urlParams = new URLSearchParams(window.location.search);
@@ -267,16 +234,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentActiveSection.classList.remove('active');
             }
             
-            // Add active class to the new section and update currentSectionIndex
-            section.classList.add('active');
+            // Add instant-active class to the new section and update currentSectionIndex
+            section.classList.add('instant-active');
             currentSectionIndex = Array.prototype.indexOf.call(sections, section);
             updateIndicators(); // Update indicators here
-            section.scrollIntoView({ behavior: 'smooth' });
+            section.scrollIntoView({ behavior: 'instant' }); // Instantly scroll to the section
+            
+            // Add animate class to white-overlay
+            const whiteOverlay = document.querySelector('.white-overlay-return');
+            whiteOverlay.classList.add('animate');
+            
+            // Remove animate class after animation ends
+            setTimeout(() => {
+                whiteOverlay.classList.remove('animate');
+                // Hide the overlay after animation ends
+                whiteOverlay.style.display = 'none';
+            }, 1000); // Matches the 1s transition time in CSS
         } else {
             console.error('Section not found');
             // Optionally, redirect to an error page or display an error message
         }
+    } else {
+        // Hide the overlay if the user is not coming back
+        const whiteOverlay = document.querySelector('.white-overlay-return');
+        whiteOverlay.style.display = 'none';
     }
+
+    // Add event listener to each indicator
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', function() {
+            // Remove active class from the current section
+            sections[currentSectionIndex].classList.remove('active');
+
+            // Update currentSectionIndex
+            currentSectionIndex = index;
+
+            // Add active class to the new section
+            sections[currentSectionIndex].classList.add('active');
+            updateIndicators(); // Update indicators here
+            sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth' });
+        });
+    });
 });
 
 
