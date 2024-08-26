@@ -129,12 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-
-// Portfolio section image carousel
-
-
-
 // Middle section text p animation and logic for appearance
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -189,6 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
+
+  
 // Custom Scrolling effect logic
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -198,13 +194,19 @@ document.addEventListener('DOMContentLoaded', function() {
     let scrollTimeout = null;
     const scrollDelay = 0; // Adjust this value to control the scroll delay
 
+    // Find the initial active section
+    const initialActiveSection = document.querySelector('.active');
+    if (initialActiveSection) {
+        currentSectionIndex = Array.prototype.indexOf.call(sections, initialActiveSection);
+    }
+
     function switchSection(direction) {
         if (isScrolling) return;
-    
         isScrolling = true;
-    
+
+        // Remove active class from the current section
         sections[currentSectionIndex].classList.remove('active');
-    
+
         if (direction === 'down') {
             // Prevent scrolling down after the last section
             if (currentSectionIndex < sections.length - 1) {
@@ -213,9 +215,9 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (direction === 'up') {
             currentSectionIndex = Math.max(0, currentSectionIndex - 1);
         }
-    
+
+        // Add active class to the new section
         sections[currentSectionIndex].classList.add('active');
-    
         setTimeout(() => {
             isScrolling = false;
         }, 1500); // Adjust the delay to match the transition duration in CSS
@@ -225,7 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (scrollTimeout !== null) {
             clearTimeout(scrollTimeout);
         }
-
         scrollTimeout = setTimeout(function() {
             if (event.deltaY > 0) {
                 switchSection('down');
@@ -234,7 +235,32 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, scrollDelay);
     });
+
+    // Logic to handle coming back from project-detail.html
+    const urlParams = new URLSearchParams(window.location.search);
+    const sectionId = urlParams.get('section');
+
+    if (sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            // Remove active class from any section that has it
+            const currentActiveSection = document.querySelector('.active');
+            if (currentActiveSection) {
+                currentActiveSection.classList.remove('active');
+            }
+            
+            // Add active class to the new section and update currentSectionIndex
+            section.classList.add('active');
+            currentSectionIndex = Array.prototype.indexOf.call(sections, section);
+            section.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.error('Section not found');
+            // Optionally, redirect to an error page or display an error message
+        }
+    }
 });
+
+
 
 // Trigger construction-hat animation
 document.getElementById('section-3').addEventListener('transitionend', function() {
@@ -247,3 +273,20 @@ function triggerHatAnimation() {
     const animatedHat = document.getElementById('animated-hat');
     animatedHat.classList.add('animate'); // Add class to trigger animation
 }
+
+// Add event listener to each button
+document.querySelectorAll('.button').forEach(button => {
+    button.addEventListener('click', function() {
+        // Get the data-project-id attribute of the button
+        const projectId = button.getAttribute('data-project-id');
+        console.log('Project ID:', projectId);
+        
+        // Create a new URL with the projectId as a query parameter
+        const url = new URL('project-detail.html', window.location.origin);
+        url.searchParams.set('projectId', projectId);
+        console.log('New URL:', url.href);
+        
+        // Navigate to the new URL without opening a new tab
+        window.location.href = url.href;
+    });
+});
