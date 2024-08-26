@@ -25,10 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Animate the intro content title immediately
     introTitleAnimation.classList.add("fill");
 
-    // Fade in the image
-    setTimeout(() => {
-        introContentImage.classList.add('fade-in');
-    }, 500);
 
     // Wait for the slide-in animation to complete before starting the CAPITAL fill effect
     setTimeout(() => {
@@ -40,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Move "TO REALITY" to the right after a short delay
             setTimeout(() => {
-                toReality.style.transform = 'translateX(50%)';
-                toReality.style.color = "black"
+                toReality.style.transform = 'translateX(27%)';
+                toReality.style.color = "white"
             }, 500);
         }, 500);
     }, 2000);
@@ -184,12 +180,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-  
+
+// Update navigation indicator sign based on which section is active
+document.addEventListener('DOMContentLoaded', function() {
+    const indicators = document.querySelectorAll('.indicator');
+    const sections = document.querySelectorAll('.section');
+
+    let currentSectionIndex = 0;
+
+    // Function to update the indicators
+    function updateIndicators() {
+        indicators.forEach((indicator, index) => {
+            if (index === currentSectionIndex) {
+                indicator.classList.add('filled');
+            } else {
+                indicator.classList.remove('filled');
+            }
+        });
+    }
+
+    // Initial update
+    updateIndicators();
+
+
+
+    
 // Custom Scrolling effect logic
 
-document.addEventListener('DOMContentLoaded', function() {
-    const sections = document.querySelectorAll('.section');
-    let currentSectionIndex = 0;
     let isScrolling = false;
     let scrollTimeout = null;
     const scrollDelay = 0; // Adjust this value to control the scroll delay
@@ -218,6 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add active class to the new section
         sections[currentSectionIndex].classList.add('active');
+        updateIndicators(); // Update indicators here
         setTimeout(() => {
             isScrolling = false;
         }, 1500); // Adjust the delay to match the transition duration in CSS
@@ -252,6 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add active class to the new section and update currentSectionIndex
             section.classList.add('active');
             currentSectionIndex = Array.prototype.indexOf.call(sections, section);
+            updateIndicators(); // Update indicators here
             section.scrollIntoView({ behavior: 'smooth' });
         } else {
             console.error('Section not found');
