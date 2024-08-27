@@ -55,3 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1200);
     });
 });
+
+window.addEventListener('load', function() {
+    const overlay = document.querySelector('.white-overlay-incoming');
+    overlay.classList.add('animate');
+});

@@ -115,3 +115,20 @@ body {
 .white-overlay.animate {
     height: 100vh;
 }
+
+.white-overlay-incoming {
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    display: block;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Starts covering the full height */
+    background-color: rgb(255, 255, 255);
+    transition: transform 1s ease-in-out;
+    transform: translateY(0); /* Start fully on screen as default */
+}
+
+.white-overlay-incoming.animate {
+    transform: translateY(100vh); /* Slide down off the screen */
+}

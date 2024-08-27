@@ -169,8 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-    // Initial update
+    // Initial 
     updateIndicators();
 
  // Custom Scrolling effect logic
@@ -188,38 +187,40 @@ function switchSection(direction) {
     if (isScrolling) return;
     isScrolling = true;
 
-    // Remove active class from the current section
-    sections[currentSectionIndex].classList.remove('active');
+        // Remove active and instant-active classes from all sections
+        sections.forEach(section => {
+            section.classList.remove('active', 'instant-active');
+        });
 
-    if (direction === 'down') {
-        // Prevent scrolling down after the last section
-        if (currentSectionIndex < sections.length - 1) {
-            currentSectionIndex++;
+        if (direction === 'down') {
+            // Prevent scrolling down after the last section
+            if (currentSectionIndex < sections.length - 1) {
+                currentSectionIndex++;
+            }
+        } else if (direction === 'up') {
+            currentSectionIndex = Math.max(0, currentSectionIndex - 1);
         }
-    } else if (direction === 'up') {
-        currentSectionIndex = Math.max(0, currentSectionIndex - 1);
+
+        // Add active class to the new section
+        sections[currentSectionIndex].classList.add('active');
+        updateIndicators(); // Update indicators here
+        setTimeout(() => {
+            isScrolling = false;
+        }, 1500); // Adjust the delay to match the transition duration in CSS
     }
 
-    // Add active class to the new section
-    sections[currentSectionIndex].classList.add('active');
-    updateIndicators(); // Update indicators here
-    setTimeout(() => {
-        isScrolling = false;
-    }, 1500); // Adjust the delay to match the transition duration in CSS
-}
-
-window.addEventListener('wheel', function(event) {
-    if (scrollTimeout !== null) {
-        clearTimeout(scrollTimeout);
-    }
-    scrollTimeout = setTimeout(function() {
-        if (event.deltaY > 0) {
-            switchSection('down');
-        } else if (event.deltaY < 0) {
-            switchSection('up');
+    window.addEventListener('wheel', function(event) {
+        if (scrollTimeout !== null) {
+            clearTimeout(scrollTimeout);
         }
-    }, scrollDelay);
-});
+        scrollTimeout = setTimeout(function() {
+            if (event.deltaY > 0) {
+                switchSection('down');
+            } else if (event.deltaY < 0) {
+                switchSection('up');
+            }
+        }, scrollDelay);
+    });
 
     // Logic to handle coming back from project-detail.html
     const urlParams = new URLSearchParams(window.location.search);
@@ -263,8 +264,10 @@ window.addEventListener('wheel', function(event) {
     // Add event listener to each indicator
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', function() {
-            // Remove active class from the current section
-            sections[currentSectionIndex].classList.remove('active');
+            // Remove active and instant-active classes from all sections
+            sections.forEach(section => {
+                section.classList.remove('active', 'instant-active');
+            });
 
             // Update currentSectionIndex
             currentSectionIndex = index;
@@ -291,9 +294,12 @@ function triggerHatAnimation() {
     animatedHat.classList.add('animate'); // Add class to trigger animation
 }
 
-// Add event listener to each button
+
+// More Details... button logic
 document.querySelectorAll('.button').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+
         // Get the data-project-id attribute of the button
         const projectId = button.getAttribute('data-project-id');
         console.log('Project ID:', projectId);
@@ -303,7 +309,47 @@ document.querySelectorAll('.button').forEach(button => {
         url.searchParams.set('projectId', projectId);
         console.log('New URL:', url.href);
         
-        // Navigate to the new URL without opening a new tab
-        window.location.href = url.href;
+        // Show the white overlay immediately
+        const overlay = document.querySelector('.white-overlay-leave');
+        overlay.classList.add('animate');
+        
+        // Navigate to the new URL after a delay
+        setTimeout(function() {
+            window.location.href = url.href;
+        }, 1200); // Adjust the delay time as needed
     });
+});
+
+
+// Grabbing onto images
+
+const imageTrack = document.getElementById('image-track');
+
+let isDown = false;
+let startX;
+let scrollLeft;
+
+imageTrack.addEventListener('mousedown', (e) => {
+  isDown = true;
+  imageTrack.style.cursor = 'grabbing';
+  startX = e.pageX - imageTrack.offsetLeft;
+  scrollLeft = imageTrack.scrollLeft;
+});
+
+imageTrack.addEventListener('mouseleave', () => {
+  isDown = false;
+  imageTrack.style.cursor = 'grab';
+});
+
+imageTrack.addEventListener('mouseup', () => {
+  isDown = false;
+  imageTrack.style.cursor = 'grab';
+});
+
+imageTrack.addEventListener('mousemove', (e) => {
+  if (!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - imageTrack.offsetLeft;
+  const walk = (x - startX) * 1; // adjust the speed of the drag
+  imageTrack.scrollLeft = scrollLeft - walk;
 });
