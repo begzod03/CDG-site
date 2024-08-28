@@ -7,6 +7,7 @@ html, body {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
+    cursor: url("./assets/cursor-ball.svg"), auto;
 }
 
 /* Section Styling */
@@ -87,6 +88,7 @@ html, body {
     padding: 10px;
     margin-bottom: 10px;
     background-color: #f0f0f0;
+    cursor: pointer;
     border: none;
 }
 
@@ -115,6 +117,7 @@ body.menu-open .menu-content {
 }
 
 .navigation-wrapper {
+    width: 40px;
     height: 150px;
     display: flex;
     flex-direction: column;
@@ -127,11 +130,16 @@ body.menu-open .menu-content {
 
 .indicator {
     height: 40px;
-    margin: 10%;
+    transition: 0.65s ease;
+}
+
+.indicator:hover {
+    height: 65px;
 }
 
 .filled {
     fill: black;
+    height: 65px;
 }
 
 /* Site Header Style */
@@ -281,6 +289,7 @@ body.menu-open .menu-content {
 #middle-section {
     background-color: white;
     display: flex;
+    height: 100vh;
     justify-content: center;
     align-items: center;
 }
@@ -298,19 +307,24 @@ body.menu-open .menu-content {
 #middle-section-text {
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
     width: 50%;
-    color: #9b9b9b;
+    color: #4a4a4a;
     margin-right: 30px;
 }
 
 #middle-section-text p {
     width: 100%;
-    font-size: 70px;
+    height: 0; /* Initial height set to 0 */
+    margin: 0; /* Initial margin set to 0 */
+    font-size: 8em;
     visibility: hidden; /* Hide text initially */
+    transition: 1.5s ease;
 }
-
+#middle-section-text p span:hover{
+    color: black;
+}
 #middle-section-text span {
     visibility: visible; /* Reveal spans as they appear */
     display: inline-block;
@@ -322,7 +336,7 @@ body.menu-open .menu-content {
     justify-content: center;
     align-items: center;
     width: 50%;
-    font-size: 100px;
+    font-size: 8em;
 }
 
 .middle-section-line {
@@ -503,7 +517,7 @@ img {
     left: 0;
     width: 100%;
     height: 100vh; /* Starts covering the full height */
-    background-color: rgb(255, 255, 255);
+    background-color: gold;
     transition: transform 1s ease-in-out;
     transform: translateY(0); /* Start fully on screen as default */
 }
@@ -527,4 +541,198 @@ img {
 
 .white-overlay-leave.animate {
     height: 100vh;
+}
+
+
+/* Section 4 */
+
+.team-image {
+    position: relative;
+    width: 100%;
+    height: 100vmin;
+    overflow: hidden;
+    height: 30vh;
+    position: relative;
+}
+.team-image img {
+    width: 100%;
+}
+.image-text-overlay{
+    width: 100%;
+    display: flex;
+    height: 30vh;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+}
+.image-text-overlay p {
+    padding: 0px 50px;
+    background-color: white;
+    position: absolute;
+    z-index: 999;
+    color: black;
+    font-size: 10em;
+    -webkit-text-stroke: 2px black;
+}
+
+.team-section-text-wrapper {
+    margin-top: 6%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.service {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+}
+.service p {
+    text-align: center;
+    font-size: 1.5em;
+}
+.service-image img{
+    width: 100%;
+    object-fit: cover;
+}
+
+
+/* Section 5 */
+
+.contact-section {
+    position: relative;
+}
+
+.contact-title{
+    font-size: 5em;
+    display: flex;
+    height: 25vh;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Horizontal Line */
+.horizontal-line-container{
+    height: 100vh;
+    display: flex;
+    position: absolute; /* Make the container absolute */
+    top: 0; /* Ensure it covers the full height */
+    left: 0; /* Ensure it covers the full width */
+    width: 100%; /* Full width */
+    z-index: 1;
+}
+
+.horizontal-line {
+    width: 0%; /* Start with zero width */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 5px;
+    background-color: black;
+    transition: width 3s ease-in-out 2s; /* Animation duration, easing, and delay */
+}
+
+.section.active .horizontal-line {
+    width: 100%; /* Full width when active */
+    top: 25%;
+}
+
+/* Vertical Line */
+.vertical-line-container {
+    height: 100vh;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.vertical-line {
+    height: 0%;
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 4px;
+    background-color: black;
+    transition: height 3s ease-in-out 1s;
+}
+
+.section.active .vertical-line {
+    height: 100%;
+    left: 35%;
+}
+
+.contact-title {
+    position: relative; /* Ensure these elements are above the line */
+    z-index: 5; /* Higher z-index to appear above the line */
+}
+
+.map-container {
+    display: flex;
+    justify-content: flex-end;
+    height: 0;
+}
+
+.contact-information {
+    display: flex;
+    width: 35%;
+    height: 75vh;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.contact-text {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    align-items: center;
+    font-size: 3em;
+}
+.email {
+    margin: 0;
+}
+.phone p {
+    margin: 0 0 10% 0;
+
+}
+
+/* Contact Form */
+
+.message {
+    z-index: 99999;
+    height: 100%;
+}
+
+#message {
+    height: 20vh;
+}
+
+.contact-form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.contact-form input, .contact-form textarea {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 1.6em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.contact-form button {
+    padding: 30px;
+    font-size: 55px;
+    background-color: gold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.contact-form button:hover {
+    background-color: #ffc107;
 }

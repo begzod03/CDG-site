@@ -9,7 +9,7 @@ const projects = [
             './assets/house.jpg',
             './assets/house1.jpg'
         ],
-        details: 'This is project 1'
+        details: 'Nestled in the heart of Hillsboro and just a short walk from downtown, this charming duplex, with its exquisite retro-modern design, is a hidden gem waiting to be uncovered. Featuring a three-floor layout, it offers the perfect arrangement for room sharing, with each individual enjoying their own private floor.'
     },
     {
         id: 2,
@@ -31,7 +31,7 @@ const projects = [
             './assets/house.jpg',
             './assets/house1.jpg'
         ],        
-        details: 'This is project 2'
+        details: 'Nestled in the heart of Hillsboro and just a short walk from downtown, this charming duplex, with its exquisite retro-modern design, is a hidden gem waiting to be uncovered. Featuring a three-floor layout, it offers the perfect arrangement for room sharing, with each individual enjoying their own private floor.'
     },
     {
         id: 4,
@@ -42,7 +42,7 @@ const projects = [
             './assets/house.jpg',
             './assets/house1.jpg'
         ],        
-        details: 'This is project 2'
+        details: 'Nestled in the heart of Hillsboro and just a short walk from downtown, this charming duplex, with its exquisite retro-modern design, is a hidden gem waiting to be uncovered. Featuring a three-floor layout, it offers the perfect arrangement for room sharing, with each individual enjoying their own private floor.'
     },
     {
         id: 5,
@@ -53,7 +53,7 @@ const projects = [
             './assets/house.jpg',
             './assets/house1.jpg'
         ],        
-        details: 'This is project 2'
+        details: 'Nestled in the heart of Hillsboro and just a short walk from downtown, this charming duplex, with its exquisite retro-modern design, is a hidden gem waiting to be uncovered. Featuring a three-floor layout, it offers the perfect arrangement for room sharing, with each individual enjoying their own private floor.'
     },
     {
         id: 6,
@@ -64,7 +64,7 @@ const projects = [
             './assets/house.jpg',
             './assets/house1.jpg'
         ],        
-        details: 'This is project 2'
+        details: 'Nestled in the heart of Hillsboro and just a short walk from downtown, this charming duplex, with its exquisite retro-modern design, is a hidden gem waiting to be uncovered. Featuring a three-floor layout, it offers the perfect arrangement for room sharing, with each individual enjoying their own private floor.'
     },
     {
         id: 7,
@@ -74,7 +74,8 @@ const projects = [
             './assets/duplex.jpg',
             './assets/house.jpg',
             './assets/house1.jpg'
-        ],        details: 'This is project 2'
+        ],        
+        details: 'Nestled in the heart of Hillsboro and just a short walk from downtown, this charming duplex, with its exquisite retro-modern design, is a hidden gem waiting to be uncovered. Featuring a three-floor layout, it offers the perfect arrangement for room sharing, with each individual enjoying their own private floor.'
     },
     {
         id: 8,
@@ -85,7 +86,7 @@ const projects = [
             './assets/house.jpg',
             './assets/house1.jpg'
         ],        
-        details: 'This is project 2'
+        details: 'Nestled in the heart of Hillsboro and just a short walk from downtown, this charming duplex, with its exquisite retro-modern design, is a hidden gem waiting to be uncovered. Featuring a three-floor layout, it offers the perfect arrangement for room sharing, with each individual enjoying their own private floor.'
     },
     {
         id: 9,
@@ -96,7 +97,7 @@ const projects = [
             './assets/house.jpg',
             './assets/house1.jpg'
         ],        
-        details: 'This is project 2'
+        details: 'Nestled in the heart of Hillsboro and just a short walk from downtown, this charming duplex, with its exquisite retro-modern design, is a hidden gem waiting to be uncovered. Featuring a three-floor layout, it offers the perfect arrangement for room sharing, with each individual enjoying their own private floor.'
     },
     {
         id: 10,
@@ -107,6 +108,6 @@ const projects = [
             './assets/house.jpg',
             './assets/house1.jpg'
         ],        
-        details: 'This is project 2'
+        details: 'Nestled in the heart of Hillsboro and just a short walk from downtown, this charming duplex, with its exquisite retro-modern design, is a hidden gem waiting to be uncovered. Featuring a three-floor layout, it offers the perfect arrangement for room sharing, with each individual enjoying their own private floor.'
     }
 ];

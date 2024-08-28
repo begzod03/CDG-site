@@ -1,0 +1,157 @@
+body {
+    font-family: "Bebas Neue", sans-serif;
+}
+
+.about-us-logo{
+    width: 30%;
+    margin: 5em;
+    margin-bottom: 0;
+}
+
+.about-us-logo img{
+    width: 100%;
+}
+
+.about-us-title p {
+    text-align: center;
+    margin: 0;
+    font-size: 8em;
+}
+
+.about-us-title p span,
+.about-us-logo span,
+.about-us-text p span {
+    display: inline-block;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(100%); /* Start position */
+    transition: transform .5s ease-out, opacity 0s ease;
+}
+
+.about-us-title p span.animate,
+.about-us-logo span.animate,
+.about-us-text p span.animate {
+    opacity: 1; /* Make visible */
+    transform: translateY(0); /* End position */
+}
+
+.about-us-title p span:hover{
+    color: white;
+}
+.about-us-image{
+    display: flex;
+    justify-content: center;
+}
+.about-wrapper{
+    display: flex;
+    width: 100%;
+}
+
+.about-us-text-section{
+    display: flex;
+    width: 50%;
+    padding: 1em;
+    font-size: 3.7em;
+    display: flex;
+    width: 50%;
+}
+
+
+/* Menu Button */
+.menu-button {
+    font-size: 45px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    color: rgb(0, 0, 0);
+    text-decoration: underline black;
+    cursor: pointer;
+    transition: 0.5s ease;
+    z-index: 1000;
+}
+.menu-button:hover {
+    color: rgb(255, 255, 255);
+    text-decoration: underline #000000;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); /* Start with no background color */
+    backdrop-filter: blur(0px); /* Start with no blur */
+    opacity: 0; /* Start invisible */
+    pointer-events: none; /* Prevent clicks when invisible */
+    transition: background-color 0.5s ease, backdrop-filter 0.5s ease, opacity 0.5s ease; /* Smooth transition */
+    z-index: 999;
+}
+
+.menu-content {
+    position: fixed;
+    top: 0;
+    right: -50%; /* Start off-screen to the right */
+    width: 40%;
+    height: 100%;
+    background-color: #fff;
+    padding: 20px;
+    transition: right 0.5s ease-in-out; /* Use right for sliding */
+}
+
+.menu-content button {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 40px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border: none;
+}
+
+body.menu-open .menu-overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Darken background */
+    backdrop-filter: blur(5px); /* Apply blur */
+    opacity: 1; /* Make visible */
+    pointer-events: auto; /* Allow clicks */
+}
+
+body.menu-open .menu-content {
+    right: 0%; /* Move to the visible area on the right */
+}
+
+.menu-content-wrapper {
+    margin-top: 100px;
+}
+
+/* Loading Circle */
+.loading-circle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 10%;
+    height: 10%;
+    background-color: gold;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1; /* Ensure it is above other elements */
+    animation: expandCircle 5s forwards; /* Trigger the animation */
+}
+
+@keyframes expandCircle {
+    0% {
+        width: 0%;
+        height: 0%;
+    }
+    100% {
+        width: 300%; /* Large enough to cover the entire screen */
+        height: 500%;
+    }
+}
+
+/* Ensure the background color changes to gold after the animation */
+body.gold-background {
+    background-color: gold;
+}
